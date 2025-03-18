@@ -9,7 +9,7 @@
             </li>
             <li class="">
                 <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer group-hover:bg-gray-700">
-                    <a href="index.php?modul=user&fitur=list">Data Komik</a>
+                    <a href="{{ route('ViewAdmin.komiklist') }}">Data Komik</a>
                 </div>
             </li>
             <li class="group">

@@ -45,7 +45,7 @@
                                 <td>{{ $user->password }}</td>
                                 <td>{{ $user->role }}</td>
                                 <td>{{ $user->status ? 'Premium' : 'Free' }} </td>
-                                <td>
+                                <td class="flex gap-2">
                                     <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-success">Update</a>
                                     <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?');">
                                         @csrf

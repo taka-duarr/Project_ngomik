@@ -157,7 +157,7 @@
             <!-- Comic Card -->
             <div class="card bg-base-200 shadow-xl border-l-4 border-primary"> <!-- Garis tepi di kiri -->
                 <figure>
-                    <img src="{{ asset('img_komik/' . $komik->gambar_komik) }}" 
+                    <img src="{{ asset('storage/' . $komik->gambar_komik) }}" 
                          alt="{{ $komik->nama_komik }}" 
                          class="w-64 h-80 object-cover" />
                 </figure>

@@ -14,9 +14,15 @@ class ControllerKomik extends Controller
         return view('ViewUser.index', compact('komiks'));
     }
 
+    public function indexAdmin()
+    {
+        $komiks = Komik::all();
+        return view('ViewAdmin.komiklist', compact('komiks'));
+    }
+
     public function create()
     {
-        return view('komik.create');
+        return view('ViewAdmin.komikinput');
     }
 
     public function store(Request $request)
@@ -30,29 +36,28 @@ class ControllerKomik extends Controller
         ]);
 
         // Upload gambar
-        $path = $request->file('gambar_komik')->store('komik', 'public');
+        if ($request->hasFile('gambar_komik')) {
+            $gambarPath = $request->file('gambar_komik')->store('img_komik', 'public');
+        } else {
+            $gambarPath = null;
+        }
 
         Komik::create([
             'nama_komik' => $request->nama_komik,
             'genre' => $request->genre,
             'status' => $request->status,
-            'gambar_komik' => $path,
+            'gambar_komik' => $gambarPath,
             'sinopsis' => $request->sinopsis,
         ]);
 
-        return redirect()->route('ViewUser.index')->with('success', 'Komik berhasil ditambahkan!');
+        return redirect()->route('ViewAdmin.komiklist')->with('success', 'Komik berhasil ditambahkan!');
     }
 
-    public function show($id)
-    {
-        $komik = Komik::findOrFail($id);
-        return view('komik.show', compact('komik'));
-    }
 
     public function edit($id)
     {
         $komik = Komik::findOrFail($id);
-        return view('komik.edit', compact('komik'));
+        return view('ViewAdmin.komikupdate', compact('komik'));
     }
 
     public function update(Request $request, $id)
@@ -60,39 +65,46 @@ class ControllerKomik extends Controller
         $request->validate([
             'nama_komik' => 'required|string|max:255',
             'genre' => 'required|string|max:255',
+            'sinopsis' => 'required|string',
             'status' => 'required|boolean',
             'gambar_komik' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'sinopsis' => 'required|string',
         ]);
 
         $komik = Komik::findOrFail($id);
+        $komik->nama_komik = $request->nama_komik;
+        $komik->genre = $request->genre;
+        $komik->sinopsis = $request->sinopsis;
+        $komik->status = $request->status;
 
         if ($request->hasFile('gambar_komik')) {
-            // Hapus gambar lama
-            Storage::disk('public')->delete($komik->gambar_komik);
-            // Simpan gambar baru
-            $path = $request->file('gambar_komik')->store('komik', 'public');
-        } else {
-            $path = $komik->gambar_komik;
+            // Hapus gambar lama jika ada
+            if ($komik->gambar_komik) {
+                Storage::delete('public/img_komik/' . $komik->gambar_komik);
+            }
+
+            $file = $request->file('gambar_komik');
+            $namaFile = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/img_komik', $namaFile);
+            $komik->gambar_komik = $namaFile;
         }
 
-        $komik->update([
-            'nama_komik' => $request->nama_komik,
-            'genre' => $request->genre,
-            'status' => $request->status,
-            'gambar_komik' => $path,
-            'sinopsis' => $request->sinopsis,
-        ]);
+        $komik->save();
 
-        return redirect()->route('ViewUser.index')->with('success', 'Komik berhasil diperbarui!');
+        return redirect()->route('ViewAdmin.komiklist')->with('success', 'Komik berhasil diperbarui');
     }
 
     public function destroy($id)
-    {
-        $komik = Komik::findOrFail($id);
-        Storage::disk('public')->delete($komik->gambar_komik);
-        $komik->delete();
+{
+    $komik = Komik::findOrFail($id);
 
-        return redirect()->route('ViewUser.index')->with('success', 'Komik berhasil dihapus!');
+    // Hapus gambar dari storage jika ada
+    if ($komik->gambar_komik) {
+        Storage::delete('public/img_komik/' . $komik->gambar_komik);
     }
+
+    $komik->delete();
+
+    return redirect()->route('ViewAdmin.komiklist')->with('success', 'Komik berhasil dihapus');
+}
+
 }
