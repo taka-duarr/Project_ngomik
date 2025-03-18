@@ -9,8 +9,10 @@ use App\Http\Controllers\ControllerUser; // Import Controller
 // });
 
 //  
- Route::get('/users', [ControllerUser::class, 'index'])->name('ViewAdmin.userlist');
- Route::get('/users/{id}/edit', [ControllerUser::class, 'edit'])->name('user.edit');
+Route::get('/users', [ControllerUser::class, 'index'])->name('ViewAdmin.userlist');
+Route::get('/users/create', [ControllerUser::class, 'create'])->name('user.create');
+Route::post('/users', [ControllerUser::class, 'store'])->name('user.store');
+Route::get('/users/{id}/edit', [ControllerUser::class, 'edit'])->name('user.edit');
 Route::put('/users/{id}', [ControllerUser::class, 'update'])->name('user.update');
 Route::delete('/users/{id}', [ControllerUser::class, 'destroy'])->name('user.destroy');
 

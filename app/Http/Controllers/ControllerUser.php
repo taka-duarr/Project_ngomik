@@ -14,11 +14,29 @@ class ControllerUser extends Controller
         return view('ViewAdmin.userlist', compact('users'));
     }
 
-    // public function show($id)
-    // {
-    //     $user = Users::findOrFail($id);
-    //     return view('ViewUser.show', compact('user'));
-    // }
+    public function create()
+    {
+        return view('ViewAdmin.userinput'); // Langsung menuju view tanpa mengirim data
+    }
+    // Menyimpan data user baru
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_user' => 'required|string|max:255',
+            'role' => 'required|string|max:50',
+            'password' => 'required|string',
+            'status' => 'required|boolean',
+        ]);
+
+        Users::create([
+            'nama_user' => $request->nama_user,
+            'role' => $request->role,
+            'password' => $request->password, // Jangan di-encrypt
+            'status' => $request->status, // 1 untuk Premium, 0 untuk Free
+        ]);
+
+        return redirect()->route('ViewAdmin.userlist')->with('success', 'User berhasil ditambahkan');
+    }
 
     public function edit($id)
     {

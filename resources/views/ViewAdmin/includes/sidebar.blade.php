@@ -4,25 +4,20 @@
 
     <li class="group">
                 <a href="{{ route('ViewAdmin.userlist') }}">
-                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer group-hover:bg-gray-700">Data Role</div>
+                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer group-hover:bg-gray-700">Data User</div>
                 </a>
             </li>
             <li class="">
                 <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer group-hover:bg-gray-700">
-                    <a href="index.php?modul=user&fitur=list">Data User</a>
+                    <a href="index.php?modul=user&fitur=list">Data Komik</a>
                 </div>
             </li>
             <li class="group">
                 <a href="index.php?modul=barang&fitur=list">
-                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer group-hover:bg-gray-700">Data Barang</div>
+                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer group-hover:bg-gray-700">Data Penjualan</div>
                 </a>
             </li>
-            <li class="group">
-                <a href="index.php?modul=approve&fitur=list">
-                <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer group-hover:bg-gray-700">List Pesanan</div>
-                </a>
-               
-            </li>
+            
 
         
         

@@ -20,7 +20,7 @@
     <div class="container mx-auto py-8 px-4">
         <!-- Insert Button -->
         <div class="mb-6">
-            <a href="index.php?modul=user&fitur=input" class="btn btn-primary">Insert New User</a>
+            <a href="{{ route('user.create') }}" class="btn btn-primary">Insert New User</a>
         </div>
 
         <!-- User Table -->
@@ -47,7 +47,12 @@
                                 <td>{{ $user->status ? 'Premium' : 'Free' }} </td>
                                 <td>
                                     <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-success">Update</a>
-                                    <a href="index.php?modul=user&fitur=delete&id_user=<?= $user['id_user']; ?>" class="btn btn-sm btn-error">Delete</a>
+                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?');">
+                                        @csrf
+                                        @method('DELETE') <!-- Laravel butuh ini untuk DELETE -->
+                                        <button type="submit" class="btn btn-sm btn-error">Hapus</button>
+                                    </form>
+
                                 </td>
                             </tr>
                         <?php endforeach; ?>
