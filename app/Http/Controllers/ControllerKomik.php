@@ -26,32 +26,36 @@ class ControllerKomik extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'nama_komik' => 'required|string|max:255',
-            'genre' => 'required|string|max:255',
-            'status' => 'required|boolean',
-            'gambar_komik' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'sinopsis' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'nama_komik' => 'required|string',
+        'genre' => 'required|string',
+        'status' => 'required|boolean',
+        'gambar_komik' => 'required|image',
+        'sinopsis' => 'required|string',
+    ]);
 
-        // Upload gambar
-        if ($request->hasFile('gambar_komik')) {
-            $gambarPath = $request->file('gambar_komik')->store('img_komik', 'public');
-        } else {
-            $gambarPath = null;
-        }
+    // Upload gambar
+    // if ($request->hasFile('gambar_komik')) {
+    //     $file = $request->file('gambar_komik');
+        
+    // } else {
+    //     $filename = null;
+    // }
 
-        Komik::create([
-            'nama_komik' => $request->nama_komik,
-            'genre' => $request->genre,
-            'status' => $request->status,
-            'gambar_komik' => $gambarPath,
-            'sinopsis' => $request->sinopsis,
-        ]);
+    $gambarPath = $request->file('gambar_komik')->store('img_komik', 'public');
+    // Simpan data ke database
+    Komik::create([
+        'nama_komik' => $request->nama_komik,
+        'genre' => $request->genre,
+        'status' => $request->status,
+        'gambar_komik' => $gambarPath,
+        'sinopsis' => $request->sinopsis,
+    ]);
 
-        return redirect()->route('ViewAdmin.komiklist')->with('success', 'Komik berhasil ditambahkan!');
-    }
+    return redirect()->route('ViewAdmin.komiklist')->with('success', 'Komik berhasil ditambahkan!');
+}
+
 
 
     public function edit($id)
@@ -61,47 +65,55 @@ class ControllerKomik extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nama_komik' => 'required|string|max:255',
-            'genre' => 'required|string|max:255',
-            'sinopsis' => 'required|string',
-            'status' => 'required|boolean',
-            'gambar_komik' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+{
+    // Validasi input
+    $request->validate([
+        'nama_komik' => 'required|string',
+        'genre' => 'required|string',
+        'status' => 'required|boolean',
+        'gambar_komik' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'sinopsis' => 'required|string',
+    ]);
 
-        $komik = Komik::findOrFail($id);
-        $komik->nama_komik = $request->nama_komik;
-        $komik->genre = $request->genre;
-        $komik->sinopsis = $request->sinopsis;
-        $komik->status = $request->status;
+    // Ambil data komik berdasarkan ID
+    $komik = Komik::findOrFail($id);
 
-        if ($request->hasFile('gambar_komik')) {
-            // Hapus gambar lama jika ada
-            if ($komik->gambar_komik) {
-                Storage::delete('public/img_komik/' . $komik->gambar_komik);
-            }
-
-            $file = $request->file('gambar_komik');
-            $namaFile = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/img_komik', $namaFile);
-            $komik->gambar_komik = $namaFile;
+    // Cek apakah pengguna mengunggah gambar baru
+    if ($request->hasFile('gambar_komik')) {
+        // Hapus gambar lama jika ada
+        if ($komik->gambar_komik && Storage::disk('public')->exists($komik->gambar_komik)) {
+            Storage::disk('public')->delete($komik->gambar_komik);
         }
 
-        $komik->save();
-
-        return redirect()->route('ViewAdmin.komiklist')->with('success', 'Komik berhasil diperbarui');
+        // Simpan gambar baru
+        $gambarPath = $request->file('gambar_komik')->store('img_komik', 'public');
+    } else {
+        // Gunakan gambar lama jika tidak ada perubahan
+        $gambarPath = $komik->gambar_komik;
     }
 
-    public function destroy($id)
+    // Update data di database
+    $komik->update([
+        'nama_komik' => $request->nama_komik,
+        'genre' => $request->genre,
+        'status' => $request->status,
+        'gambar_komik' => $gambarPath, // Simpan path baru atau lama
+        'sinopsis' => $request->sinopsis,
+    ]);
+
+    return redirect()->route('ViewAdmin.komiklist')->with('success', 'Komik berhasil diperbarui!');
+}
+
+public function destroy($id)
 {
     $komik = Komik::findOrFail($id);
 
     // Hapus gambar dari storage jika ada
-    if ($komik->gambar_komik) {
-        Storage::delete('public/img_komik/' . $komik->gambar_komik);
+    if ($komik->gambar_komik && Storage::disk('public')->exists($komik->gambar_komik)) {
+        Storage::disk('public')->delete($komik->gambar_komik);
     }
 
+    // Hapus data dari database
     $komik->delete();
 
     return redirect()->route('ViewAdmin.komiklist')->with('success', 'Komik berhasil dihapus');

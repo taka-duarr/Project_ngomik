@@ -45,7 +45,7 @@
                                 <td>{{ $komik->nama_komik }}</td>
                                 <td>{{ $komik->genre }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/img_komik/' . $komik->gambar_komik) }}" alt="Gambar Komik" class="w-20 h-20 object-cover">
+                                    <img src="{{ asset('storage/' . $komik->gambar_komik) }}" alt="Gambar Komik" class="w-20 h-20 object-cover">
                                 </td>
                                 <td>{{ Str::limit($komik->sinopsis, 50) }}</td>
                                 <td>{{ $komik->status ? 'Premium' : 'Free' }}</td>
@@ -56,6 +56,9 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-error">Hapus</button>
                                     </form>
+                                </td>
+                                <td>
+                                    <a href="{{ route('chapters.index', $komik->id) }}" class="btn btn-info">Lihat Chapter</a>
                                 </td>
                             </tr>
                         @endforeach

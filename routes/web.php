@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerKomik; // Import Controller
 use App\Http\Controllers\ControllerUser; // Import Controller
+use App\Http\Controllers\ControllerChapter; // Import Controller
 
 // Route::get('/', function () {
 //     return view('ViewAdmin.userlist');
@@ -22,6 +23,15 @@ Route::post('/komik', [ControllerKomik::class, 'store'])->name('komik.store');
 Route::get('/komik/{id}/edit', [ControllerKomik::class, 'edit'])->name('komik.edit');
 Route::put('/komik/{id}', [ControllerKomik::class, 'update'])->name('komik.update');
 Route::delete('/komik/{id}', [ControllerKomik::class, 'destroy'])->name('komik.destroy');
+
+
+
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/komik/{id}/chapters', [ChapterController::class, 'index'])->name('chapters.index');
+    Route::get('/komik/{id}/chapters/create', [ChapterController::class, 'create'])->name('chapters.create');
+    Route::post('/komik/{id}/chapters', [ChapterController::class, 'store'])->name('chapters.store');
+    Route::delete('/chapters/{id}', [ChapterController::class, 'destroy'])->name('chapters.destroy');
+});
 
 
 Route::get('/', [ControllerKomik::class, 'index'])->name('ViewUser.index');
