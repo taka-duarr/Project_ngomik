@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Users;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 class ControllerUser extends Controller
 {
@@ -31,7 +32,8 @@ class ControllerUser extends Controller
         Users::create([
             'nama_user' => $request->nama_user,
             'role' => $request->role,
-            'password' => $request->password, // Jangan di-encrypt
+            // 'password' => $request->password, // Jangan di-encrypt
+            'password' => Hash::make($request->password), // 🔥 Enkripsi password
             'status' => $request->status, // 1 untuk Premium, 0 untuk Free
         ]);
 
@@ -61,8 +63,8 @@ class ControllerUser extends Controller
 
         // Hanya update password jika diisi
         if ($request->filled('password')) {
-            // $user->password = bcrypt($request->password); //pass enkripsi
-            $user->password = $request->password;
+            $user->password = bcrypt($request->password); //pass enkripsi
+            // $user->password = $request->password;
 
         }
 

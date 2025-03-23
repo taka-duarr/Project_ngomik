@@ -42,7 +42,6 @@
                                 <option value="">Pilih Role</option>
                                 <option value="Admin">Admin</option>
                                 <option value="User">User</option>
-                                <option value="Editor">Editor</option>
                             </select>
                         </div>
 

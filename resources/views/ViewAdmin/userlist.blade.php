@@ -30,7 +30,7 @@
                     <tr>
                         <th class="w-1/12">ID User</th>
                         <th class="w-1/4">User</th>
-                        <th class="w-1/4">Password</th>
+                        <!-- <th class="w-1/4">Password</th> -->
                         <th class="w-1/4">Role</th>
                         <th class="w-1/4">Status</th>
                         <th class="w-1/6">Actions</th>
@@ -42,7 +42,7 @@
                             <tr>
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->nama_user }}</td>
-                                <td>{{ $user->password }}</td>
+                                <!-- <td>{{ $user->password }}</td> -->
                                 <td>{{ $user->role }}</td>
                                 <td>{{ $user->status ? 'Premium' : 'Free' }} </td>
                                 <td class="flex gap-2">

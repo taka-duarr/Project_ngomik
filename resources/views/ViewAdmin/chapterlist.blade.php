@@ -22,7 +22,7 @@
                     <tr>
                         <th class="p-3 border-b">No</th>
                         <th class="p-3 border-b">Nama Chapter</th>
-                        <th class="p-3 border-b">File Chapter</th>
+                        <!-- <th class="p-3 border-b">File Chapter</th> -->
                         <th class="p-3 border-b">Aksi</th>
                     </tr>
                 </thead>
@@ -31,7 +31,7 @@
                         <tr class="border-b hover:bg-gray-100">
                             <td class="p-3">{{ $key + 1 }}</td>
                             <td class="p-3">{{ $chapter->nama_chapter }}</td>
-                            <td class="p-3">{{ $chapter->file_chapter }}</td>
+                            <!-- <td class="p-3">{{ $chapter->file_chapter }}</td> -->
                             <td class="p-3">
                             <div class="flex flex-col sm:flex-row gap-2">
                                 <!-- Tombol Hapus -->

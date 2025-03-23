@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerKomik; // Import Controller
 use App\Http\Controllers\ControllerUser; // Import Controller
 use App\Http\Controllers\ControllerChapter; // Import Controller
+use App\Http\Controllers\ControllerAuth;
 
 // Route::get('/', function () {
 //     return view('ViewAdmin.userlist');
@@ -34,8 +35,17 @@ Route::delete('/komik/{id}', [ControllerKomik::class, 'destroy'])->name('komik.d
     Route::put('/chapter/{id}', [ControllerChapter::class, 'update'])->name('chapter.update');
     Route::delete('/chapter/{id}', [ControllerChapter::class, 'destroy'])->name('chapter.destroy');
 
+   
+
+Route::get('/register', [ControllerAuth::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [ControllerAuth::class, 'register']);
+Route::get('/login', [ControllerAuth::class, 'showLoginForm'])->name('login');
+Route::post('/login', [ControllerAuth::class, 'login']);
+Route::post('/logout', [ControllerAuth::class, 'logout'])->name('logout');
 
 
-Route::get('/', [ControllerKomik::class, 'index'])->name('ViewUser.index');
+
+
+Route::get('/home', [ControllerKomik::class, 'index'])->name('ViewUser.index');
 
 
