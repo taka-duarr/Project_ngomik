@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_chapter');
             $table->foreignId('id_komik')->constrained('tb_komik')->onDelete('cascade'); // Foreign Key
+            $table->string('file_chapter');
             $table->timestamps();
         });
     }

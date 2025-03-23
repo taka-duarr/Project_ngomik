@@ -41,10 +41,10 @@ class DatabaseSeeder extends Seeder
 
         // Tambahkan data ke tabel chapters
         DB::table('tb_chapter')->insert([
-            ['nama_chapter' => 'Chapter 1', 'id_komik' => 1, 'created_at' => '2025-03-11 14:10:00', 'updated_at' => '2025-03-11 14:10:00'],
-            ['nama_chapter' => 'Chapter 2', 'id_komik' => 1, 'created_at' => '2025-03-11 14:10:00', 'updated_at' => '2025-03-11 14:10:00'],
-            ['nama_chapter' => 'Chapter 1', 'id_komik' => 2, 'created_at' => '2025-03-11 14:10:00', 'updated_at' => '2025-03-11 14:10:00'],
-            ['nama_chapter' => 'Chapter 2', 'id_komik' => 2, 'created_at' => '2025-03-11 14:10:00', 'updated_at' => '2025-03-11 14:10:00'],
+            ['nama_chapter' => 'Chapter 1', 'id_komik' => 1,'file_chapter' => 'chapter1.pdf', 'created_at' => '2025-03-11 14:10:00', 'updated_at' => '2025-03-11 14:10:00'],
+            ['nama_chapter' => 'Chapter 2', 'id_komik' => 1,'file_chapter' => 'chapter2.pdf', 'created_at' => '2025-03-11 14:10:00', 'updated_at' => '2025-03-11 14:10:00'],
+            ['nama_chapter' => 'Chapter 1', 'id_komik' => 2,'file_chapter' => 'chapter1.pdf', 'created_at' => '2025-03-11 14:10:00', 'updated_at' => '2025-03-11 14:10:00'],
+            ['nama_chapter' => 'Chapter 2', 'id_komik' => 2,'file_chapter' => 'chapter2.pdf', 'created_at' => '2025-03-11 14:10:00', 'updated_at' => '2025-03-11 14:10:00'],
         ]);
 
         DB::table('tb_user')->insert([

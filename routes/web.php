@@ -26,12 +26,14 @@ Route::delete('/komik/{id}', [ControllerKomik::class, 'destroy'])->name('komik.d
 
 
 
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/komik/{id}/chapters', [ChapterController::class, 'index'])->name('chapters.index');
-    Route::get('/komik/{id}/chapters/create', [ChapterController::class, 'create'])->name('chapters.create');
-    Route::post('/komik/{id}/chapters', [ChapterController::class, 'store'])->name('chapters.store');
-    Route::delete('/chapters/{id}', [ChapterController::class, 'destroy'])->name('chapters.destroy');
-});
+
+    Route::get('/komik/{id}/chapter', [ControllerChapter::class, 'index'])->name('ViewAdmin.chapterlist');
+    Route::get('/komik/{id}/chapter/create', [ControllerChapter::class, 'create'])->name('chapter.create');
+    Route::post('/komik/{id}/chapter', [ControllerChapter::class, 'store'])->name('chapter.store');
+    Route::get('/chapter/{id}/edit', [ControllerChapter::class, 'edit'])->name('chapter.edit');
+    Route::put('/chapter/{id}', [ControllerChapter::class, 'update'])->name('chapter.update');
+    Route::delete('/chapter/{id}', [ControllerChapter::class, 'destroy'])->name('chapter.destroy');
+
 
 
 Route::get('/', [ControllerKomik::class, 'index'])->name('ViewUser.index');

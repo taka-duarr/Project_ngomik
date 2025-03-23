@@ -58,7 +58,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <a href="{{ route('chapters.index', $komik->id) }}" class="btn btn-info">Lihat Chapter</a>
+                                    <a href="{{ route('ViewAdmin.chapterlist', $komik->id) }}" class="btn btn-info">Lihat Chapter</a>
                                 </td>
                             </tr>
                         @endforeach

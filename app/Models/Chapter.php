@@ -9,7 +9,8 @@ class Chapter extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_chapter', 'id_komik'];
+    protected $table = 'tb_chapter';
+    protected $fillable = ['nama_chapter', 'id_komik', 'file_chapter'];
 
     public function komik()
     {
